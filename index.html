@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Guess Game</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app small">
+    <header class="topbar">
+      <div class="brand">
+        <h1>Guess Game</h1>
+        <p class="muted">فصل ۷ — طراحی نرم‌افزار</p>
+      </div>
+      <div class="meta">
+        <div class="meta-item">راند: <strong id="roundInfo">-</strong></div>
+        <div class="meta-item">تیم: <strong id="teamInfo">-</strong></div>
+      </div>
+    </header>
+
+    <main class="main">
+      <section id="setup" class="panel compact">
+        <h2>شروع بازی</h2>
+        <div class="inputs">
+          <input id="t1" placeholder="تیم ۱" />
+          <input id="t2" placeholder="تیم ۲" />
+          <input id="t3" placeholder="تیم ۳" />
+        </div>
+        <div class="row">
+          <button id="btnLoadSample" class="btn subtle">بارگذاری تستی</button>
+          <button id="btnStart" class="btn primary">شروع بازی</button>
+        </div>
+        <p class="muted tiny">۳ تیم — هر تیم ۳ راند — هر راند ۳ دقیقه — حداکثر ۳۰ کلمه</p>
+      </section>
+
+      <section id="roundControl" class="panel compact hidden">
+        <div class="info-line">
+          <div>نوبت: <strong id="teamTurn">-</strong></div>
+          <div>راند: <strong id="roundNumber">-</strong></div>
+        </div>
+        <div class="row center">
+          <button id="btnStartRound" class="btn primary">▶ شروع نوبت (03:00)</button>
+        </div>
+      </section>
+
+      <section id="game" class="panel gamepanel hidden">
+        <div class="timer-row">
+          <div id="mainTimer" class="timer big">03:00</div>
+          <div class="progress-wrap">
+            <div id="timerBar" class="timer-bar"></div>
+          </div>
+        </div>
+
+        <div id="cardBox" class="card-word">---</div>
+        <div class="word-meta">امتیاز کلمه: <span id="curWordScore">0</span></div>
+
+        <div class="controls compact">
+          <button id="btnCorrect" class="btn success">✔ درست</button>
+          <button id="btnSkip" class="btn warn">⏭ رد</button>
+          <button id="btnDefine" class="btn danger">📘 تعریف (−۱)</button>
+        </div>
+
+        <div class="side-row">
+          <div class="scoreBoard small card">
+            <h4>امتیازها</h4>
+            <ul id="scoreList"></ul>
+            <div class="muted tiny">نوبت تیم: <span id="teamRoundPlayed">0</span>/3</div>
+          </div>
+
+          <div class="small panel">
+            <p>کلمات باقی: <strong id="wordsLeft">0</strong></p>
+            <p>اسکیپ: <strong id="skipCount">0</strong></p>
+            <div class="row">
+              <button id="btnNextTeam" class="btn neutral hidden">🔄 نوبت تیم بعدی</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="roundResult" class="panel compact hidden">
+        <h3>نتیجه راند</h3>
+        <p>تیم: <strong id="resultTeam">-</strong></p>
+        <p>امتیاز این راند: <strong id="resultRoundScore">0</strong></p>
+        <p>امتیاز کل: <strong id="resultTotalScore">0</strong></p>
+        <div class="row">
+          <button id="btnStartNext" class="btn primary">شروع نوبت بعدی</button>
+        </div>
+      </section>
+
+      <section id="final" class="panel compact hidden">
+        <h3>پایان بازی</h3>
+        <div id="finalScores"></div>
+        <div class="row">
+          <button id="btnRestart" class="btn primary">اجرا مجدد</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer muted tiny">made with Love🩵</footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

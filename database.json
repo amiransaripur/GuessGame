@@ -1,0 +1,24 @@
+{
+  "words": [
+    {"word":"Coupling","definition":"میزان وابستگی بین ماژول‌ها","score":2},
+    {"word":"Cohesion","definition":"تمرکز یک ماژول روی یک هدف","score":2},
+    {"word":"Encapsulation","definition":"مخفی کردن جزئیات داخلی","score":2},
+    {"word":"Global Variable","definition":"متغیر سراسری که وابستگی می‌آورد","score":1},
+    {"word":"Interface","definition":"درگاه ارتباطی بین ماژول‌ها","score":1},
+    {"word":"Modularity","definition":"تقسیم سیستم به بخش‌های مستقل","score":1},
+    {"word":"Information Hiding","definition":"پنهان‌سازی جزئیات داخلی","score":1},
+    {"word":"Functional Cohesion","definition":"همبستگی تابعی","score":3},
+    {"word":"Temporal Cohesion","definition":"همبستگی زمانی","score":2},
+    {"word":"Dependency Injection","definition":"تزریق وابستگی برای کاهش coupling","score":3},
+    {"word":"Singleton","definition":"الگوی یک‌نمونه","score":2},
+    {"word":"Factory","definition":"الگوی ساخت","score":2},
+    {"word":"Observer","definition":"الگوی اطلاع‌رسانی","score":2},
+    {"word":"Adapter","definition":"الگویی برای تطبیق اینترفیس","score":2},
+    {"word":"Facade","definition":"پنهان‌سازی پیچیدگی پشت یک API","score":2},
+    {"word":"DRY","definition":"Don't Repeat Yourself","score":1},
+    {"word":"KISS","definition":"Keep It Simple, Stupid","score":1},
+    {"word":"YAGNI","definition":"You Aren't Gonna Need It","score":1},
+    {"word":"API","definition":"رابط برنامه‌نویسی","score":1},
+    {"word":"ACID","definition":"خصوصیات تراکنش‌ها","score":3}
+  ]
+}
