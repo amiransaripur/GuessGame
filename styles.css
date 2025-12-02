@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Lalezar&display=swap');
+
 :root{
   --bg:#061025;
   --panel:#0b1730;
@@ -10,41 +12,119 @@
   --card-grad: linear-gradient(180deg,#06223d,#0b2b4a);
   --radius:12px;
 }
+
 *{box-sizing:border-box}
+
 body{
   margin:0;background:linear-gradient(180deg,var(--bg),#041225);color:#eaf6ff;
-  font-family: "Vazirmatn", "Inter", Tahoma, sans-serif;
+  font-family: "Vazirmatn", Tahoma, sans-serif;
   display:flex;align-items:center;justify-content:center;height:100vh;
 }
+
 .app.small{width:840px;padding:14px}
+
 .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.brand h1{margin:0;font-size:18px;color:var(--neon)}
+
+.brand h1{
+  margin:0;font-size:18px;color:var(--neon);
+  font-family:'Lalezar', cursive;
+}
+
 .brand p{margin:0;font-size:12px;color:var(--muted)}
+
 .meta{color:var(--muted);font-size:13px;display:flex;gap:14px}
-.panel{background:linear-gradient(180deg,var(--panel),#07122a);border-radius:var(--radius);padding:14px;box-shadow:0 8px 30px rgba(0,0,0,0.35);margin-bottom:12px}
+.tempInfo { font-size:13px;color:var(--muted); }
+
+.panel{
+  background:linear-gradient(180deg,var(--panel),#07122a);
+  border-radius:var(--radius);
+  padding:14px;
+  box-shadow:0 8px 30px rgba(0,0,0,0.35);
+  margin-bottom:12px
+}
+
 .compact{max-width:760px;margin:0 auto;text-align:center}
 .hidden{display:none}
-.inputs input{width:100%;padding:8px;margin:6px 0;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);color:#eaf6ff}
+
+.inputs input{
+  width:100%;padding:8px;margin:6px 0;
+  border-radius:8px;border:1px solid rgba(255,255,255,0.04);
+  background:rgba(255,255,255,0.02);color:#eaf6ff;
+  font-family:'Lalezar', cursive;
+}
+
 .row{display:flex;gap:8px;justify-content:center;margin-top:10px}
 .row.center{justify-content:center}
-.btn{padding:8px 12px;border-radius:10px;border:none;cursor:pointer;font-weight:600}
+
+.btn{
+  padding:8px 12px;border-radius:10px;border:none;cursor:pointer;font-weight:600;
+  font-family:'Lalezar', cursive;
+}
+
 .btn.primary{background:var(--neon);color:#04102a}
 .btn.subtle{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
 .btn.success{background:var(--success);color:#062010}
 .btn.warn{background:var(--warn);color:#2b1200}
 .btn.danger{background:var(--danger);color:#2b0711}
 .btn.neutral{background:#24344e;color:#eaf6ff}
+
 .timer-row{display:flex;align-items:center;gap:12px;justify-content:center}
-.timer.big{font-size:40px;color:var(--accent);font-weight:700}
-.progress-wrap{width:300px;height:8px;background:rgba(255,255,255,0.03);border-radius:8px;overflow:hidden}
-.timer-bar{height:100%;width:100%;background:linear-gradient(90deg,var(--neon),var(--accent));transform-origin:left;transition:width 0.3s linear}
-.card-word{margin:12px auto;width:680px;height:120px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:24px;background:var(--card-grad);box-shadow:0 10px 40px rgba(90,120,255,0.09);padding:8px}
+.timer.big{
+  font-size:40px;color:var(--accent);font-weight:700;
+  font-family:'Lalezar', cursive;
+}
+
+.progress-wrap{
+  width:300px;height:8px;background:rgba(255,255,255,0.03);
+  border-radius:8px;overflow:hidden
+}
+
+.timer-bar{
+  height:100%;width:100%;
+  background:linear-gradient(90deg,var(--neon),var(--accent));
+  transform-origin:left;transition:width 0.3s linear
+}
+
+.card-word{
+  margin:12px auto;width:680px;height:120px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;background:var(--card-grad);
+  box-shadow:0 10px 40px rgba(90,120,255,0.09);
+  padding:8px;font-family:'Lalezar', cursive;
+}
+
 .word-meta{color:var(--muted);margin-top:6px}
+
 .controls.compact{display:flex;gap:8px;justify-content:center;margin-top:12px}
+
 .side-row{display:flex;gap:12px;justify-content:space-between;align-items:flex-start;margin-top:12px}
+
 .scoreBoard ul{list-style:none;padding:0;margin:0;text-align:right}
 .scoreBoard li{padding:6px;border-bottom:1px dashed rgba(255,255,255,0.02)}
+
 .small{width:320px;padding:10px}
+
 .footer{margin-top:8px;text-align:center;color:var(--muted);font-size:12px}
+
 .muted{color:var(--muted)}
 .tiny{font-size:12px}
+
+h2, h3, h4 {
+  font-family:'Lalezar', cursive;
+}
+
+.score-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  text-align: center;
+}
+
+.teamScore {
+  background: linear-gradient(135deg, #0b1730, #06223d);
+  padding: 10px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--accent);
+}

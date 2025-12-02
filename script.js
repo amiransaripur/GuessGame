@@ -1,63 +1,66 @@
-// script.js — compact & stable version
-const MAX_WORDS_PER_ROUND = 30;
-const ROUND_SECONDS = 180; // 3 minutes
+// script.js — نسخه نهایی برای 4 تیم و 10 کلمه در هر راند
+const MAX_WORDS_PER_ROUND = 10;
+const ROUND_SECONDS = 180;
 
 let db = {words:[]};
 let teams = [];
 let currentTeamIndex = 0;
 let roundsPerTeam = 3;
-let currentRoundOfTeam = [0,0,0];
+let currentRoundOfTeam = [0,0,0,0];
 
 let wordsPool = [];
 let roundQueue = [];
 let skipQueue = [];
 let currentWord = null;
 
-let roundStartScore = 0; // snapshot of team's score at start of round
+let roundStartScore = 0; 
 let mainTimer = 0;
 let timerJob = null;
 
 const el = id => document.getElementById(id);
 
-// load DB
-fetch('database.json')
-  .then(r=>r.json())
-  .then(j=>{
+// بارگذاری دیتابیس
+fetch('database.json').then(r=>r.json()).then(j=>{
     db = j || {words:[]};
     wordsPool = (db.words || []).slice();
     shuffle(wordsPool);
-  })
-  .catch(e=>{
+}).catch(e=>{
     alert('دیتابیس بارگذاری نشد: ' + e);
-  });
+});
 
-function shuffle(a){ for(let i=a.length-1;i>0;i--){ const r=Math.floor(Math.random()*(i+1)); [a[i],a[r]]=[a[r],a[i]]; } }
+function shuffle(a){ 
+  for(let i=a.length-1;i>0;i--){
+    const r=Math.floor(Math.random()*(i+1));
+    [a[i],a[r]]=[a[r],a[i]];
+  } 
+}
 
-function fmt(sec){ const m=Math.floor(sec/60), s=sec%60; return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`; }
+function fmt(sec){ 
+  const m=Math.floor(sec/60), s=sec%60; 
+  return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`; 
+}
 
 function resetState(){
   currentTeamIndex = 0;
-  currentRoundOfTeam = [0,0,0];
+  currentRoundOfTeam = [0,0,0,0];  
   wordsPool = (db.words || []).slice();
   shuffle(wordsPool);
 }
 
-// UI updates
-function updateMeta(){
-  el('roundInfo').innerText = `${currentRoundOfTeam[currentTeamIndex]+1}/${roundsPerTeam}`;
-  el('teamInfo').innerText = teams[currentTeamIndex]?.name || '-';
-}
+// آپدیت UI
 function updateRoundInfo(){
   el('teamTurn').innerText = teams[currentTeamIndex].name;
   el('roundNumber').innerText = currentRoundOfTeam[currentTeamIndex] + 1;
 }
+
 function updateScores(){
-  const ul = el('scoreList'); ul.innerHTML='';
-  teams.forEach((t,i)=>{ const mark = (i===currentTeamIndex)?' ← نوبت':''; const li=document.createElement('li'); li.innerText=`${t.name}: ${t.score} ${mark}`; ul.appendChild(li); });
-  el('teamRoundPlayed').innerText = currentRoundOfTeam[currentTeamIndex];
+  teams.forEach((t,i)=>{
+    el(`score${i+1}`).innerText = t.score;
+    el(`name${i+1}`).innerText = t.name;
+  });
 }
 
-// prepare words
+// آماده‌سازی کلمات راند
 function prepareRoundWords(){
   roundQueue = [];
   for(let i=0;i<MAX_WORDS_PER_ROUND && wordsPool.length>0;i++){
@@ -73,26 +76,22 @@ function prepareRoundWords(){
   el('skipCount').innerText = 0;
 }
 
-// update timer bar
 function setTimerBar(){
   const bar = el('timerBar');
   const pct = Math.max(0, Math.min(1, mainTimer / ROUND_SECONDS));
   bar.style.width = `${pct*100}%`;
 }
 
-// next word and bonus rule
 function nextWord(){
   if(roundQueue.length === 0){
     if(skipQueue.length > 0){
       roundQueue = skipQueue.slice();
       skipQueue = [];
     } else {
-      // no words left
       if(mainTimer > 0){
         teams[currentTeamIndex].score += 5;
         updateScores();
         alert(`👏 تیم ${teams[currentTeamIndex].name} همهٔ کلمات را قبل از پایان زمان تمام کرد!\n+5 امتیاز`);
-        // end round cleanly
         endRound();
         return;
       }
@@ -108,7 +107,6 @@ function nextWord(){
   currentWord = roundQueue.shift();
   currentWord.score = Number(currentWord.score) || 1;
 
-  // animate simple (repaint)
   el('cardBox').classList.remove('flip');
   void el('cardBox').offsetWidth;
   el('cardBox').classList.add('flip');
@@ -119,14 +117,13 @@ function nextWord(){
   el('skipCount').innerText = skipQueue.length;
 }
 
-// start round
 function startRound(){
   if(currentRoundOfTeam[currentTeamIndex] >= roundsPerTeam){
     alert('این تیم همه راندهایش را بازی کرده.');
     return;
   }
   if(roundQueue.length === 0) prepareRoundWords();
-  // snapshot start score
+
   roundStartScore = teams[currentTeamIndex].score || 0;
 
   el('roundControl').classList.add('hidden');
@@ -157,7 +154,6 @@ function startRound(){
   updateScores();
 }
 
-// button handlers
 function onCorrect(){
   if(!currentWord) return;
   teams[currentTeamIndex].score += Number(currentWord.score) || 1;
@@ -174,23 +170,18 @@ function onSkip(){
 
 function onDefine(){
   if(!currentWord) return;
-  // penalty
   teams[currentTeamIndex].score -= 1;
   updateScores();
   alert('تعریف:\n' + (currentWord.definition || 'ندارد'));
-  // after alert, continue to next word (timer continues)
   nextWord();
 }
 
-// end round
 function endRound(){
   enableControls(false);
-  // stop timer if running
   if(timerJob){ clearInterval(timerJob); timerJob = null; }
 
   currentRoundOfTeam[currentTeamIndex]++;
 
-  // show result panel with per-round points
   const roundPoints = teams[currentTeamIndex].score - roundStartScore;
   el('resultTeam').innerText = teams[currentTeamIndex].name;
   el('resultRoundScore').innerText = roundPoints >= 0 ? `+${roundPoints}` : `${roundPoints}`;
@@ -199,7 +190,6 @@ function endRound(){
   el('roundResult').classList.remove('hidden');
   el('game').classList.add('hidden');
 
-  // if all done -> change button text
   if(currentRoundOfTeam.every(r => r >= roundsPerTeam)){
     el('btnStartNext').innerText = 'پایان بازی';
   } else {
@@ -207,9 +197,7 @@ function endRound(){
   }
 }
 
-// next team (after teacher sees result and presses start next)
 function onStartNext(){
-  // find next team with remaining rounds
   let found = false;
   for(let i=1;i<=teams.length;i++){
     const nx = (currentTeamIndex + i) % teams.length;
@@ -220,11 +208,10 @@ function onStartNext(){
     }
   }
   if(!found){
-    // all done
     endGame();
     return;
   }
-  // prepare for next team
+
   if(roundQueue.length === 0 && wordsPool.length > 0) prepareRoundWords();
   el('roundResult').classList.add('hidden');
   el('roundControl').classList.remove('hidden');
@@ -232,10 +219,9 @@ function onStartNext(){
   updateScores();
 }
 
-// next team button in-game (if teacher presses)
 function onNextTeam(){
   if(timerJob){ clearInterval(timerJob); timerJob = null; }
-  // same selection logic
+
   for(let i=1;i<=teams.length;i++){
     const nx = (currentTeamIndex + i) % teams.length;
     if(currentRoundOfTeam[nx] < roundsPerTeam){
@@ -249,7 +235,6 @@ function onNextTeam(){
   updateScores();
 }
 
-// end game
 function endGame(){
   el('roundControl').classList.add('hidden');
   el('game').classList.add('hidden');
@@ -262,23 +247,26 @@ function endGame(){
   el('final').classList.remove('hidden');
 }
 
-// controls
 function enableControls(v){
   el('btnCorrect').disabled = !v;
   el('btnSkip').disabled = !v;
   el('btnDefine').disabled = !v;
 }
 
-// init
 document.addEventListener('DOMContentLoaded', ()=>{
-  el('btnLoadSample').addEventListener('click', ()=>{
-    el('t1').value='تیم آبی'; el('t2').value='تیم قرمز'; el('t3').value='تیم سبز';
-  });
   el('btnStart').addEventListener('click', ()=>{
     const n1 = el('t1').value.trim()||'تیم ۱';
     const n2 = el('t2').value.trim()||'تیم ۲';
     const n3 = el('t3').value.trim()||'تیم ۳';
-    teams = [{name:n1,score:0},{name:n2,score:0},{name:n3,score:0}];
+    const n4 = el('t4').value.trim()||'تیم ۴';
+
+    teams = [
+      {name:n1,score:0},
+      {name:n2,score:0},
+      {name:n3,score:0},
+      {name:n4,score:0},
+    ];
+
     resetState();
     el('setup').classList.add('hidden');
     el('roundControl').classList.remove('hidden');

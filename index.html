@@ -13,25 +13,25 @@
         <h1>Guess Game</h1>
         <p class="muted">فصل ۷ — طراحی نرم‌افزار</p>
       </div>
-      <div class="meta">
-        <div class="meta-item">راند: <strong id="roundInfo">-</strong></div>
-        <div class="meta-item">تیم: <strong id="teamInfo">-</strong></div>
+      <div class="meta tempInfo">
+        <div class="meta-item">نسخه ۴ تیمه</div>
       </div>
     </header>
 
     <main class="main">
+
       <section id="setup" class="panel compact">
         <h2>شروع بازی</h2>
         <div class="inputs">
           <input id="t1" placeholder="تیم ۱" />
           <input id="t2" placeholder="تیم ۲" />
           <input id="t3" placeholder="تیم ۳" />
+          <input id="t4" placeholder="تیم ۴" />
         </div>
         <div class="row">
-          <button id="btnLoadSample" class="btn subtle">بارگذاری تستی</button>
           <button id="btnStart" class="btn primary">شروع بازی</button>
         </div>
-        <p class="muted tiny">۳ تیم — هر تیم ۳ راند — هر راند ۳ دقیقه — حداکثر ۳۰ کلمه</p>
+        <p class="muted tiny">4 تیم — هر تیم 3 راند — هر راند 3 دقیقه — حداکثر 10 کلمه</p>
       </section>
 
       <section id="roundControl" class="panel compact hidden">
@@ -44,6 +44,7 @@
         </div>
       </section>
 
+      <!-- صفحه بازی -->
       <section id="game" class="panel gamepanel hidden">
         <div class="timer-row">
           <div id="mainTimer" class="timer big">03:00</div>
@@ -64,8 +65,12 @@
         <div class="side-row">
           <div class="scoreBoard small card">
             <h4>امتیازها</h4>
-            <ul id="scoreList"></ul>
-            <div class="muted tiny">نوبت تیم: <span id="teamRoundPlayed">0</span>/3</div>
+              <div id="scoreGrid" class="score-grid">
+                <div class="teamScore"><span class="teamName" id="name1">تیم ۱</span>: <span id="score1">0</span></div>
+                <div class="teamScore"><span class="teamName" id="name2">تیم ۲</span>: <span id="score2">0</span></div>
+                <div class="teamScore"><span class="teamName" id="name3">تیم ۳</span>: <span id="score3">0</span></div>
+                <div class="teamScore"><span class="teamName" id="name4">تیم ۴</span>: <span id="score4">0</span></div>
+              </div>
           </div>
 
           <div class="small panel">
@@ -78,6 +83,7 @@
         </div>
       </section>
 
+      <!-- نتیجه راند -->
       <section id="roundResult" class="panel compact hidden">
         <h3>نتیجه راند</h3>
         <p>تیم: <strong id="resultTeam">-</strong></p>
@@ -88,6 +94,7 @@
         </div>
       </section>
 
+      <!-- پایان بازی -->
       <section id="final" class="panel compact hidden">
         <h3>پایان بازی</h3>
         <div id="finalScores"></div>
@@ -95,6 +102,7 @@
           <button id="btnRestart" class="btn primary">اجرا مجدد</button>
         </div>
       </section>
+
     </main>
 
     <footer class="footer muted tiny">made with Love🩵</footer>
