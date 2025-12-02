@@ -1,4 +1,3 @@
-// script.js — نسخه نهایی برای 4 تیم و 10 کلمه در هر راند
 const MAX_WORDS_PER_ROUND = 10;
 const ROUND_SECONDS = 180;
 
@@ -19,7 +18,6 @@ let timerJob = null;
 
 const el = id => document.getElementById(id);
 
-// بارگذاری دیتابیس
 fetch('database.json').then(r=>r.json()).then(j=>{
     db = j || {words:[]};
     wordsPool = (db.words || []).slice();
@@ -47,7 +45,6 @@ function resetState(){
   shuffle(wordsPool);
 }
 
-// آپدیت UI
 function updateRoundInfo(){
   el('teamTurn').innerText = teams[currentTeamIndex].name;
   el('roundNumber').innerText = currentRoundOfTeam[currentTeamIndex] + 1;
@@ -60,7 +57,6 @@ function updateScores(){
   });
 }
 
-// آماده‌سازی کلمات راند
 function prepareRoundWords(){
   roundQueue = [];
   for(let i=0;i<MAX_WORDS_PER_ROUND && wordsPool.length>0;i++){
