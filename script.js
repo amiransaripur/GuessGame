@@ -169,7 +169,6 @@ function onDefine(){
   teams[currentTeamIndex].score -= 1;
   updateScores();
   alert('تعریف:\n' + (currentWord.definition || 'ندارد'));
-  nextWord();
 }
 
 function endRound(){
